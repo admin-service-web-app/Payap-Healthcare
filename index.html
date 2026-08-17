@@ -415,6 +415,26 @@
   }
   .proc-subtotal .amt{font-family:'IBM Plex Mono'; color:var(--teal-900); font-size:15px;}
 
+  /* manual-price checklist — same names as the standard list, price entered by hand */
+  .manual-price-label{
+    font-size:11.5px; font-weight:700; color:var(--ink-faint); text-transform:uppercase; letter-spacing:.3px;
+    margin:14px 0 8px;
+  }
+  .manual-price-row{
+    display:flex; align-items:center; justify-content:space-between; gap:10px;
+    border:none; border-radius:14px; padding:9px 14px; margin-bottom:8px;
+    background:var(--surface); box-shadow:var(--shadow-card); transition:all .15s;
+  }
+  .manual-price-row.checked{background:var(--teal-100); box-shadow:var(--clay-inset), 0 0 0 2px var(--teal-600);}
+  .manual-price-row .box{width:16px; height:16px; border-radius:5px; border:2px solid var(--line); flex-shrink:0; position:relative; cursor:pointer;}
+  .manual-price-row.checked .box{border-color:var(--teal-600); background:var(--teal-600);}
+  .manual-price-row.checked .box::after{content:''; position:absolute; left:4px; top:1px; width:3.5px; height:8px; border:solid white; border-width:0 2px 2px 0; transform:rotate(40deg);}
+  .manual-price-row .proc-name{font-size:13.5px; font-weight:600; color:var(--ink); flex:1; cursor:pointer;}
+  .manual-price-row .manual-price-input{
+    width:104px; flex-shrink:0; text-align:right; font-family:'IBM Plex Mono'; font-size:13px; padding:8px 10px;
+  }
+  .manual-price-row .manual-price-input:disabled{opacity:.45; cursor:not-allowed;}
+
   /* custom (free-text) procedure rows */
   .custom-proc-row{
     display:flex; align-items:center; justify-content:space-between; gap:10px;
@@ -986,6 +1006,8 @@
             <div class="field">
               <label>รายการหัตถการ (เลือกได้หลายรายการ)<span class="req">*</span></label>
               <div id="procChecklist"></div>
+              <div class="manual-price-label">รายการหัตถการ (ราคากรอกเอง)</div>
+              <div id="procManualChecklist"></div>
               <div id="procCustomList"></div>
               <button type="button" class="btn btn-ghost btn-sm" id="btnAddCustomProc" data-feature="customProc" style="margin-top:8px; position:relative;">+ เพิ่มหัตถการอื่นๆ (กรอกชื่อ/ราคาเอง)<span class="new-badge" data-feature-badge="customProc">ใหม่</span></button>
               <div class="custom-proc-form" id="customProcForm" style="display:none;">
@@ -1046,6 +1068,14 @@
           <div class="field package-only" style="margin-bottom:16px;">
             <label>รูปแบบบริการ<span class="req">*</span></label>
             <div class="radio-row" id="formatRow">
+              <label class="radio-chip" data-val="8">
+                <input type="radio" name="format" value="8">
+                <span class="dot"></span> 8 ชั่วโมง (ไป-กลับ) · 6 วัน/สัปดาห์
+              </label>
+              <label class="radio-chip" data-val="10">
+                <input type="radio" name="format" value="10">
+                <span class="dot"></span> 10 ชั่วโมง (ไป-กลับ) · 6 วัน/สัปดาห์
+              </label>
               <label class="radio-chip" data-val="12">
                 <input type="radio" name="format" value="12">
                 <span class="dot"></span> 12 ชั่วโมง (ไป-กลับ) · 6 วัน/สัปดาห์
@@ -1081,6 +1111,8 @@
             <div class="field">
               <label>รายการหัตถการเสริม</label>
               <div id="addonChecklist"></div>
+              <div class="manual-price-label">รายการหัตถการเสริม (ราคากรอกเอง)</div>
+              <div id="addonManualChecklist"></div>
               <div id="addonCustomList"></div>
               <button type="button" class="btn btn-ghost btn-sm" id="btnAddCustomAddonProc" data-feature="customProc" style="margin-top:8px; position:relative;">+ เพิ่มหัตถการอื่นๆ (กรอกชื่อ/ราคาเอง)<span class="new-badge" data-feature-badge="customProc">ใหม่</span></button>
               <div class="custom-proc-form" id="customAddonProcForm" style="display:none;">
@@ -1422,35 +1454,35 @@ const PACKAGES = {
     name: 'ผู้สูงอายุทั่วไป', tag: 'Elderly Care Package',
     suited: 'ช่วยเหลือตัวเองได้น้อย · อยู่ลำพัง · พักฟื้นหลังผ่าตัด',
     includes: ['ดูแลกิจวัตรประจำวัน, อาบน้ำ, เปลี่ยนเสื้อผ้า', 'เตรียมอาหาร และให้ยา', 'วัดสัญญาณชีพและรายงานอาการแก่ครอบครัว'],
-    price: {12:[0,0], 24:[0,0]}, daily:{12:0,24:0},
+    price: {8:[0,0], 10:[0,0], 12:[0,0], 24:[0,0]}, daily:{8:0, 10:0, 12:0, 24:0},
     icon: 'M12 7a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z M6 21v-3a5 5 0 0 1 5-5h2a5 5 0 0 1 5 5v3 M9 21h6'
   },
   feed: {
     name: 'ผู้ป่วยให้อาหารทางสาย', tag: 'Nutrition Support Package',
     suited: 'NG Tube · PEG Tube',
     includes: ['เตรียมอาหารและให้อาหารทางสาย', 'ดูแลสายอาหาร ล้างอุปกรณ์', 'เฝ้าระวังการสำลัก และดูแลแผล PEG'],
-    price: {12:[0,0], 24:[0,0]}, daily:{12:0,24:0},
+    price: {8:[0,0], 10:[0,0], 12:[0,0], 24:[0,0]}, daily:{8:0, 10:0, 12:0, 24:0},
     icon: 'M8 3v6a4 4 0 0 0 4 4v0a4 4 0 0 0 4-4V3 M12 13v8 M9 21h6'
   },
   stroke: {
     name: 'ผู้ป่วยโรคหลอดเลือดสมอง', tag: 'Stroke Recovery Package',
     suited: 'Stroke · Hemiplegia · Parkinson',
     includes: ['กายภาพเบื้องต้น ฝึกเดิน ฝึกนั่ง ฝึกยืน', 'พลิกตะแคงตัว ป้องกันแผลกดทับ', 'ประเมินความก้าวหน้าการฟื้นตัว'],
-    price: {12:[0,0], 24:[0,0]}, daily:{12:0,24:0},
+    price: {8:[0,0], 10:[0,0], 12:[0,0], 24:[0,0]}, daily:{8:0, 10:0, 12:0, 24:0},
     icon: 'M12 5v3 M9 21l2-7-3-2 1-5 4 1 2 3h3 M13 12l3 2 2 6'
   },
   advanced: {
     name: 'ผู้ป่วยเจาะคอ / ดูดเสมหะ', tag: 'Advanced Nursing Package',
     suited: 'Tracheostomy · Suction · Oxygen Therapy',
     includes: ['ดูดเสมหะ และทำแผลเจาะคอ (TT Tube)', 'ประเมินการหายใจ เฝ้าระวังภาวะแทรกซ้อน', 'ประสานทีมพยาบาลอย่างใกล้ชิด'],
-    price: {12:[0,0], 24:[0,0]}, daily:{12:0,24:0},
+    price: {8:[0,0], 10:[0,0], 12:[0,0], 24:[0,0]}, daily:{8:0, 10:0, 12:0, 24:0},
     icon: 'M6 4v6a4 4 0 0 0 8 0V4 M10 20a4 4 0 0 0 4-4v-2 M18 4v4a2 2 0 0 1-2 2'
   },
   memory: {
     name: 'ผู้ป่วยอัลไซเมอร์', tag: 'Memory Care Package',
     suited: "Alzheimer's · Dementia · เดินหลง",
     includes: ['เฝ้าระวังการเดินหลง ลดความเสี่ยงพลัดตก', 'กระตุ้นความจำ กิจกรรมฝึกสมอง', 'ดูแลด้านอารมณ์ รายงานพฤติกรรมประจำวัน'],
-    price: {12:[0,0], 24:[0,0]}, daily:{12:0,24:0},
+    price: {8:[0,0], 10:[0,0], 12:[0,0], 24:[0,0]}, daily:{8:0, 10:0, 12:0, 24:0},
     icon: 'M9 4a4 4 0 0 0-4 4c0 1.2.5 2 1 2.7C5.4 11.6 5 12.7 5 14a4 4 0 0 0 4 4h1v2h4v-2h1a4 4 0 0 0 4-4c0-1.3-.4-2.4-1-3.3.5-.7 1-1.5 1-2.7a4 4 0 0 0-4-4 4 4 0 0 0-3-1.3A4 4 0 0 0 9 4Z'
   }
 };
@@ -1517,8 +1549,8 @@ function courseOptionPrice(programKey, optionKey, patientType){
 let state = {
   pkg: null, format: null, equipment: new Set(),
   serviceType: 'package',
-  procZone: null, procedures: new Set(), customProcedures: [],
-  addonZone: null, addonProcedures: new Set(), customAddonProcedures: [],
+  procZone: null, procedures: new Set(), customProcedures: [], procManualPrices: {},
+  addonZone: null, addonProcedures: new Set(), customAddonProcedures: [], addonManualPrices: {},
   courseProgram: null, courseOption: null, coursePurchaseType: 'bundle', coursePatientType: 'OPD', courseTherapistType: 'pt',
   billingEntity: BILLING_ENTITY_CONFIG.package.name
 };
@@ -1750,11 +1782,49 @@ function buildProcChecklist(container, zoneGetter, selectedSet, onToggle){
   });
 }
 
-function procSetTotal(zone, set, customArr){
+function procSetTotal(zone, set, customArr, manualPrices){
   let total = 0;
   if(zone && set) set.forEach(key=>{ total += PROCEDURES[key].price[zone] || 0; });
   if(customArr) customArr.forEach(item=> total += Number(item.price) || 0);
+  if(manualPrices) Object.values(manualPrices).forEach(p=> total += Number(p) || 0);
   return total;
+}
+
+// รายการหัตถการชื่อเดียวกับรายการมาตรฐาน แต่ราคากรอกเอง (ไม่ผูกกับราคาตามโซน) — ใช้กรณีคิดราคาไม่เหมือนกันในแต่ละเคส
+function buildManualPriceChecklist(container, pricesObj, onChange){
+  container.innerHTML = '';
+  Object.entries(PROCEDURES).forEach(([key, proc])=>{
+    const isChecked = pricesObj.hasOwnProperty(key);
+    const row = document.createElement('div');
+    row.className = 'manual-price-row' + (isChecked ? ' checked' : '');
+    row.innerHTML = `<label style="display:flex; align-items:center; gap:10px; flex:1; cursor:pointer; min-width:0;">
+        <input type="checkbox" style="display:none;" ${isChecked ? 'checked' : ''}>
+        <span class="box"></span>
+        <span class="proc-name">${proc.name}</span>
+      </label>
+      <input type="number" class="manual-price-input" placeholder="ราคา" min="0" value="${isChecked ? pricesObj[key] : ''}" ${isChecked ? '' : 'disabled'}>`;
+    const checkbox = row.querySelector('input[type=checkbox]');
+    const priceInput = row.querySelector('.manual-price-input');
+    checkbox.addEventListener('change', e=>{
+      row.classList.toggle('checked', e.target.checked);
+      priceInput.disabled = !e.target.checked;
+      if(e.target.checked){
+        pricesObj[key] = Number(priceInput.value) || 0;
+        priceInput.focus();
+      } else {
+        delete pricesObj[key];
+        priceInput.value = '';
+      }
+      onChange();
+    });
+    priceInput.addEventListener('input', ()=>{
+      if(checkbox.checked){
+        pricesObj[key] = Number(priceInput.value) || 0;
+        onChange();
+      }
+    });
+    container.appendChild(row);
+  });
 }
 
 // Primary (standalone procedure-type case)
@@ -1766,11 +1836,12 @@ buildZoneRow(procZoneRow, code=>{
   updateSummary();
 });
 buildProcChecklist(document.getElementById('procChecklist'), ()=>state.procZone, state.procedures, refreshProcSubtotal);
+buildManualPriceChecklist(document.getElementById('procManualChecklist'), state.procManualPrices, refreshProcSubtotal);
 
 function refreshProcSubtotal(){
-  const total = procSetTotal(state.procZone, state.procedures, state.customProcedures);
+  const total = procSetTotal(state.procZone, state.procedures, state.customProcedures, state.procManualPrices);
   const el = document.getElementById('procSubtotal');
-  const hasAny = state.procedures.size || state.customProcedures.length;
+  const hasAny = state.procedures.size || state.customProcedures.length || Object.keys(state.procManualPrices).length;
   el.innerHTML = hasAny ? `<span>ยอดรวมหัตถการ</span><span class="amt">฿${total.toLocaleString()}</span>` : 'เลือกโซนและหัตถการเพื่อดูยอดรวม';
   el.style.display = 'flex';
   updateSummary();
@@ -1799,11 +1870,12 @@ buildZoneRow(addonZoneRow, code=>{
   updateSummary();
 });
 buildProcChecklist(document.getElementById('addonChecklist'), ()=>state.addonZone, state.addonProcedures, refreshAddonSubtotal);
+buildManualPriceChecklist(document.getElementById('addonManualChecklist'), state.addonManualPrices, refreshAddonSubtotal);
 
 function refreshAddonSubtotal(){
-  const total = procSetTotal(state.addonZone, state.addonProcedures, state.customAddonProcedures);
+  const total = procSetTotal(state.addonZone, state.addonProcedures, state.customAddonProcedures, state.addonManualPrices);
   const el = document.getElementById('addonSubtotal');
-  const hasAny = state.addonProcedures.size || state.customAddonProcedures.length;
+  const hasAny = state.addonProcedures.size || state.customAddonProcedures.length || Object.keys(state.addonManualPrices).length;
   el.innerHTML = hasAny ? `<span>ยอดรวมหัตถการเสริม</span><span class="amt">฿${total.toLocaleString()}</span>` : 'ไม่มีบริการหัตถการเสริม';
   updateSummary();
 }
@@ -2028,12 +2100,12 @@ function updateMobileTotal(){
     const fee = Number(document.getElementById('f_monthlyFee').value) || 0;
     const deposit = Number(document.getElementById('f_deposit').value) || 0;
     const depositDue = document.getElementById('f_depositStatus').value === 'ยังไม่ชำระ';
-    const addonTotal = procSetTotal(state.addonZone, state.addonProcedures, state.customAddonProcedures);
+    const addonTotal = procSetTotal(state.addonZone, state.addonProcedures, state.customAddonProcedures, state.addonManualPrices);
     const assessmentFee = document.getElementById('f_assessmentFee').checked ? 1000 : 0;
     const holidayAmt = getHolidayTotal();
     total = fee + addonTotal + assessmentFee + holidayAmt + (depositDue ? deposit : 0);
   } else if(state.serviceType === 'procedure'){
-    total = procSetTotal(state.procZone, state.procedures, state.customProcedures);
+    total = procSetTotal(state.procZone, state.procedures, state.customProcedures, state.procManualPrices);
   } else if(state.serviceType === 'course' && state.courseProgram){
     const prog = COURSE_PROGRAMS[state.courseProgram];
     const isSingle = state.coursePurchaseType === 'single';
@@ -2053,22 +2125,26 @@ function updateSummary(){
   const body = document.getElementById('clipBody');
 
   if(state.serviceType === 'procedure'){
-    const total = procSetTotal(state.procZone, state.procedures);
-    if(!state.procZone || state.procedures.size === 0){
+    const total = procSetTotal(state.procZone, state.procedures, state.customProcedures, state.procManualPrices);
+    const hasAnyItem = state.procedures.size || state.customProcedures.length || Object.keys(state.procManualPrices).length;
+    if(!hasAnyItem){
       body.innerHTML = `<div class="clip-empty"><div class="big">ยังไม่ได้เลือกหัตถการ</div>เลือกโซนและรายการหัตถการทางซ้ายเพื่อดูยอดรวม</div>`;
       return;
     }
+    const zoneItems = state.procZone ? Array.from(state.procedures).map(k=>`<li>${PROCEDURES[k].name} — ฿${PROCEDURES[k].price[state.procZone].toLocaleString()}</li>`) : [];
+    const manualItems = Object.entries(state.procManualPrices).map(([k,p])=>`<li>${PROCEDURES[k].name} (กรอกราคาเอง) — ฿${Number(p).toLocaleString()}</li>`);
+    const customItems = state.customProcedures.map(item=>`<li>${item.name} — ฿${Number(item.price).toLocaleString()}</li>`);
     body.innerHTML = `
       <div class="clip-header">
         <div class="clip-pkgname">บริการหัตถการครั้งเดียว</div>
-        <div class="clip-pkgtag">${ZONES[state.procZone].label}</div>
+        <div class="clip-pkgtag">${state.procZone ? ZONES[state.procZone].label : 'ไม่ระบุโซน (ราคากรอกเอง)'}</div>
       </div>
       <div class="clip-fee">
         <span class="lbl">ยอดรวมค่าบริการ</span>
         <span class="val">฿${total.toLocaleString()}</span>
       </div>
       <div class="clip-section-lbl">รายการที่เลือก</div>
-      <ul class="clip-checklist">${Array.from(state.procedures).map(k=>`<li>${PROCEDURES[k].name} — ฿${PROCEDURES[k].price[state.procZone].toLocaleString()}</li>`).join('')}</ul>
+      <ul class="clip-checklist">${[...zoneItems, ...manualItems, ...customItems].join('')}</ul>
     `;
     return;
   }
@@ -2149,7 +2225,7 @@ function updateSummary(){
   const fmt = state.format;
   const priceRange = fmt ? p.price[fmt] : null;
   const dailyRate = fmt ? p.daily[fmt] : null;
-  const addonTotal = procSetTotal(state.addonZone, state.addonProcedures);
+  const addonTotal = procSetTotal(state.addonZone, state.addonProcedures, state.customAddonProcedures, state.addonManualPrices);
   // ดึงยอดเงินวันหยุดมาคำนวณ (ราคาต่อวัน × จำนวนวัน)
   const holidayAmt = getHolidayTotal();
 
@@ -2164,10 +2240,10 @@ function updateSummary(){
     ${holidayAmt ? `<div class="clip-row"><span>วันหยุด/นักขัตฤกษ์</span><b style="color:var(--teal-700);">+ ฿${holidayAmt.toLocaleString()}</b></div>` : ''}
     <div class="clip-fee">
       <span class="lbl">ค่าบริการโดยประมาณ / เดือน</span>
-      <span class="val">${priceRange ? `฿${priceRange[0].toLocaleString()}–${priceRange[1].toLocaleString()}` : '฿'+p.price[12][0].toLocaleString()+'–'+p.price[24][1].toLocaleString()}</span>
+      <span class="val">${priceRange ? `฿${priceRange[0].toLocaleString()}–${priceRange[1].toLocaleString()}` : (fmt ? 'กรอกเอง' : '฿'+p.price[12][0].toLocaleString()+'–'+p.price[24][1].toLocaleString())}</span>
     </div>
     ${addonTotal ? `<div class="clip-fee" style="background:var(--amber); color:#4A3212;">
-      <span class="lbl" style="color:#4A3212; opacity:.8;">+ หัตถการเสริม (${ZONES[state.addonZone].label})</span>
+      <span class="lbl" style="color:#4A3212; opacity:.8;">+ หัตถการเสริม${state.addonZone ? ' ('+ZONES[state.addonZone].label+')' : ''}</span>
       <span class="val">฿${addonTotal.toLocaleString()}</span>
     </div>` : ''}
     <div class="clip-section-lbl">บริการเฉพาะแพ็กเกจนี้</div>
@@ -2184,13 +2260,21 @@ function suggestFee(){
   const dailyInput = document.getElementById('f_dailyRate');
   const depositInput = document.getElementById('f_deposit');
   if(state.pkg && state.format){
-    const [lo, hi] = PACKAGES[state.pkg].price[state.format];
-    hint.textContent = `ช่วงราคาแนะนำสำหรับแพ็กเกจนี้: ฿${lo.toLocaleString()}–${hi.toLocaleString()} / เดือน`;
-    if(!feeInput.value) feeInput.value = lo;
-
+    const range = PACKAGES[state.pkg].price[state.format];
     const daily = PACKAGES[state.pkg].daily[state.format];
-    dailyHint.textContent = `อัตรารายวันแนะนำ: ฿${daily.toLocaleString()}/วัน (ใช้คำนวณกรณีอยู่ไม่ครบเดือน, ยกเลิกบริการ, หรือแอดมิท)`;
-    if(!dailyInput.value) dailyInput.value = daily;
+    if(range){
+      const [lo, hi] = range;
+      hint.textContent = `ช่วงราคาแนะนำสำหรับแพ็กเกจนี้: ฿${lo.toLocaleString()}–${hi.toLocaleString()} / เดือน`;
+      if(!feeInput.value) feeInput.value = lo;
+    } else {
+      hint.textContent = 'รูปแบบบริการนี้ยังไม่มีช่วงราคาแนะนำในระบบ กรุณากรอกค่าบริการเอง';
+    }
+    if(daily){
+      dailyHint.textContent = `อัตรารายวันแนะนำ: ฿${daily.toLocaleString()}/วัน (ใช้คำนวณกรณีอยู่ไม่ครบเดือน, ยกเลิกบริการ, หรือแอดมิท)`;
+      if(!dailyInput.value) dailyInput.value = daily;
+    } else {
+      dailyHint.textContent = 'รูปแบบบริการนี้ยังไม่มีอัตรารายวันแนะนำในระบบ กรุณากรอกเอง (ใช้คำนวณกรณีอยู่ไม่ครบเดือน, ยกเลิกบริการ, หรือแอดมิท)';
+    }
 
     const suggestedDeposit = state.format === '24' ? 10000 : 5000;
     if(!depositInput.dataset.userEdited) depositInput.value = suggestedDeposit;
@@ -2227,8 +2311,8 @@ function resetForm(){
   document.querySelectorAll('#formatRow input, #equipWrap input').forEach(el=>el.checked=false);
   state = {
     pkg:null, format:null, equipment:new Set(),
-    serviceType:'package', procZone:null, procedures:new Set(), customProcedures:[],
-    addonZone:null, addonProcedures:new Set(), customAddonProcedures:[],
+    serviceType:'package', procZone:null, procedures:new Set(), customProcedures:[], procManualPrices:{},
+    addonZone:null, addonProcedures:new Set(), customAddonProcedures:[], addonManualPrices:{},
     courseProgram:null, courseOption:null, coursePurchaseType:'bundle', coursePatientType:'OPD', courseTherapistType:'pt',
     billingEntity: BILLING_ENTITY_CONFIG.package.name
   };
@@ -2248,6 +2332,8 @@ function resetForm(){
   document.getElementById('addonChecklist').innerHTML = '';
   document.getElementById('procCustomList').innerHTML = '';
   document.getElementById('addonCustomList').innerHTML = '';
+  buildManualPriceChecklist(document.getElementById('procManualChecklist'), state.procManualPrices, refreshProcSubtotal);
+  buildManualPriceChecklist(document.getElementById('addonManualChecklist'), state.addonManualPrices, refreshAddonSubtotal);
   document.getElementById('customProcForm').style.display = 'none';
   document.getElementById('customAddonProcForm').style.display = 'none';
   document.getElementById('procSubtotal').textContent = 'เลือกโซนและหัตถการเพื่อดูยอดรวม';
@@ -2384,8 +2470,8 @@ function collectDraftSnapshot(){
     state: {
       pkg: state.pkg, format: state.format, equipment: Array.from(state.equipment),
       serviceType: state.serviceType,
-      procZone: state.procZone, procedures: Array.from(state.procedures), customProcedures: state.customProcedures,
-      addonZone: state.addonZone, addonProcedures: Array.from(state.addonProcedures), customAddonProcedures: state.customAddonProcedures,
+      procZone: state.procZone, procedures: Array.from(state.procedures), customProcedures: state.customProcedures, procManualPrices: state.procManualPrices,
+      addonZone: state.addonZone, addonProcedures: Array.from(state.addonProcedures), customAddonProcedures: state.customAddonProcedures, addonManualPrices: state.addonManualPrices,
       courseProgram: state.courseProgram, courseOption: state.courseOption,
       coursePurchaseType: state.coursePurchaseType, coursePatientType: state.coursePatientType,
       courseTherapistType: state.courseTherapistType
@@ -2442,10 +2528,12 @@ function applyDraftState(ds){
     }
     (ds.addonProcedures||[]).forEach(k=> state.addonProcedures.add(k));
     state.customAddonProcedures = ds.customAddonProcedures || [];
+    state.addonManualPrices = ds.addonManualPrices || {};
     buildProcChecklist(document.getElementById('addonChecklist'), ()=>state.addonZone, state.addonProcedures, refreshAddonSubtotal);
+    buildManualPriceChecklist(document.getElementById('addonManualChecklist'), state.addonManualPrices, refreshAddonSubtotal);
     renderCustomProcList('addonCustomList', ()=>state.customAddonProcedures, refreshAddonSubtotal);
     refreshAddonSubtotal();
-    if(ds.addonZone || (ds.addonProcedures||[]).length || (ds.customAddonProcedures||[]).length) toggleAddonSection(true);
+    if(ds.addonZone || (ds.addonProcedures||[]).length || (ds.customAddonProcedures||[]).length || Object.keys(ds.addonManualPrices||{}).length) toggleAddonSection(true);
   } else if(ds.serviceType === 'procedure'){
     if(ds.procZone){
       const chip = document.querySelector(`#procZoneRow .radio-chip[data-val="${ds.procZone}"]`);
@@ -2453,7 +2541,9 @@ function applyDraftState(ds){
     }
     (ds.procedures||[]).forEach(k=> state.procedures.add(k));
     state.customProcedures = ds.customProcedures || [];
+    state.procManualPrices = ds.procManualPrices || {};
     buildProcChecklist(document.getElementById('procChecklist'), ()=>state.procZone, state.procedures, refreshProcSubtotal);
+    buildManualPriceChecklist(document.getElementById('procManualChecklist'), state.procManualPrices, refreshProcSubtotal);
     renderCustomProcList('procCustomList', ()=>state.customProcedures, refreshProcSubtotal);
     refreshProcSubtotal();
   } else if(ds.serviceType === 'course'){
@@ -2536,10 +2626,15 @@ function genRequestId(){
   return 'req-' + Date.now() + '-' + Math.random().toString(36).slice(2);
 }
 
-function procListText(zone, set, customArr){
+function procListText(zone, set, customArr, manualPrices){
   const parts = [];
   if(zone && set && set.size){
     Array.from(set).forEach(k=> parts.push(`${PROCEDURES[k].name} (${ZONES[zone].label.split(' ·')[0]}) ฿${PROCEDURES[k].price[zone].toLocaleString()}`));
+  }
+  if(manualPrices){
+    Object.entries(manualPrices).forEach(([k, price])=>{
+      if(PROCEDURES[k] && Number(price) > 0) parts.push(`${PROCEDURES[k].name} (กรอกราคาเอง) ฿${Number(price).toLocaleString()}`);
+    });
   }
   if(customArr && customArr.length){
     customArr.forEach(item=> parts.push(`${item.name} ฿${Number(item.price).toLocaleString()}`));
@@ -2547,13 +2642,27 @@ function procListText(zone, set, customArr){
   return parts.join('; ');
 }
 
+// ดึงรายการหัตถการชื่อมาตรฐานที่ "ราคากรอกเอง" กลับออกมาจากข้อความที่บันทึกไว้ (มีเครื่องหมาย "(กรอกราคาเอง)" กำกับ)
+function extractManualPriceItems(procText){
+  if(!procText) return {};
+  const result = {};
+  procText.split('; ').forEach(seg=>{
+    const m = seg.match(/^(.*?)\s*\(กรอกราคาเอง\)\s*฿([\d,]+)\s*$/);
+    if(!m) return;
+    const name = m[1].trim();
+    const key = Object.keys(PROCEDURES).find(k => PROCEDURES[k].name === name);
+    if(key) result[key] = Number(m[2].replace(/,/g, ''));
+  });
+  return result;
+}
+
 // ดึงรายการหัตถการแบบกรอกเอง (custom) กลับออกมาจากข้อความที่บันทึกไว้ใน Sheet ตอนแก้ไข/คัดลอกเคสเดิม
-// ส่วนที่ไม่ตรงกับชื่อหัตถการมาตรฐานใน PROCEDURES ถือว่าเป็นรายการกรอกเอง
+// ส่วนที่ไม่ตรงกับชื่อหัตถการมาตรฐานใน PROCEDURES และไม่มีเครื่องหมาย "(กรอกราคาเอง)" ถือว่าเป็นรายการกรอกเองแบบอิสระ
 function extractCustomProcItems(procText, matchedProcKeys){
   if(!procText) return [];
   const matchedNames = matchedProcKeys.map(k => PROCEDURES[k].name);
   return procText.split('; ')
-    .filter(seg => seg && !matchedNames.some(n => seg.includes(n)))
+    .filter(seg => seg && !seg.includes('(กรอกราคาเอง)') && !matchedNames.some(n => seg.includes(n)))
     .map(seg => {
       const m = seg.match(/^(.*?)\s*฿([\d,]+)\s*$/);
       if(!m) return null;
@@ -2572,8 +2681,11 @@ async function saveRecord(){
     if(!state.format){ return markInvalid('formatRow', 'กรุณาเลือกรูปแบบบริการ'); }
     if(!document.getElementById('f_monthlyFee').value){ return markInvalid('f_monthlyFee', 'กรุณาระบุค่าบริการต่อเดือน'); }
   } else if(state.serviceType === 'procedure'){
-    if(!state.procZone){ return markInvalid('procZoneRow', 'กรุณาเลือกโซนบริการ'); }
-    if(state.procedures.size === 0){ return markInvalid('procChecklist', 'กรุณาเลือกหัตถการอย่างน้อย 1 รายการ'); }
+    const hasZonedItems = state.procedures.size > 0;
+    const hasManualItems = Object.keys(state.procManualPrices).length > 0;
+    const hasCustomItems = state.customProcedures.length > 0;
+    if(hasZonedItems && !state.procZone){ return markInvalid('procZoneRow', 'กรุณาเลือกโซนบริการ'); }
+    if(!hasZonedItems && !hasManualItems && !hasCustomItems){ return markInvalid('procChecklist', 'กรุณาเลือกหัตถการอย่างน้อย 1 รายการ'); }
   } else if(state.serviceType === 'course'){
     if(!state.courseProgram){ return markInvalid('courseProgramRow', 'กรุณาเลือกประเภทโปรแกรม'); }
     const prog = COURSE_PROGRAMS[state.courseProgram];
@@ -2585,10 +2697,11 @@ async function saveRecord(){
   const isProcedure = state.serviceType === 'procedure';
   const isCourse = state.serviceType === 'course';
 
-  const procTotal = isPackage ? procSetTotal(state.addonZone, state.addonProcedures, state.customAddonProcedures) : (isProcedure ? procSetTotal(state.procZone, state.procedures, state.customProcedures) : 0);
+  const procTotal = isPackage ? procSetTotal(state.addonZone, state.addonProcedures, state.customAddonProcedures, state.addonManualPrices) : (isProcedure ? procSetTotal(state.procZone, state.procedures, state.customProcedures, state.procManualPrices) : 0);
   const procZoneUsed = isPackage ? state.addonZone : (isProcedure ? state.procZone : null);
   const procSetUsed = isPackage ? state.addonProcedures : (isProcedure ? state.procedures : new Set());
   const procCustomUsed = isPackage ? state.customAddonProcedures : (isProcedure ? state.customProcedures : []);
+  const procManualUsed = isPackage ? state.addonManualPrices : (isProcedure ? state.procManualPrices : {});
 
   let courseProgramLabel = '', courseOptionLabel = '', courseSessionsTotal = '', courseSessionsUsed = '', courseTotalPrice = '';
   if(isCourse){
@@ -2651,7 +2764,7 @@ async function saveRecord(){
     billingEntity: state.billingEntity,
     serviceTypeLabel: isPackage ? 'แพ็กเกจรายเดือน' : (isProcedure ? 'บริการหัตถการครั้งเดียว' : 'คอร์ส/โปรแกรมบริการ'),
     zoneLabel: procZoneUsed ? ZONES[procZoneUsed].label.split(' ·')[0] : '',
-    procedureListText: procListText(procZoneUsed, procSetUsed, procCustomUsed),
+    procedureListText: procListText(procZoneUsed, procSetUsed, procCustomUsed, procManualUsed),
     procedureTotal: procTotal || '',
     courseProgramLabel, courseOptionLabel, courseSessionsTotal, courseSessionsUsed, courseTotalPrice,
     clientRequestId: genRequestId()
@@ -2900,7 +3013,7 @@ function openInvoice(payload, refId){
     isPackage && assessmentFee ? `ค่าประเมินหน้างาน: ฿${assessmentFee.toLocaleString()}` : '',
     isPackage && holidayAmount ? `ค่าบริการวันหยุด/นักขัตฤกษ์: ${holidayBreakdown}` : '',
     isPackage && depositDue ? `เงินประกันสัญญา (ชำระครั้งแรก): ฿${deposit.toLocaleString()}` : (isPackage ? `เงินประกันสัญญา: ${payload.depositStatus||'—'}` : ''),
-    procTotal ? `${isPackage ? 'บริการหัตถการเสริม' : 'ค่าบริการหัตถการ'} (${payload.zoneLabel||''}): ฿${procTotal.toLocaleString()}${procItems.length ? ' — ' + procItems.join(', ') : ''}` : '',
+    procTotal ? `${isPackage ? 'บริการหัตถการเสริม' : 'ค่าบริการหัตถการ'}${payload.zoneLabel ? ' ('+payload.zoneLabel+')' : ''}: ฿${procTotal.toLocaleString()}${procItems.length ? ' — ' + procItems.join(', ') : ''}` : '',
     `ยอดชำระในการเริ่มบริการครั้งนี้: ฿${total.toLocaleString()}`,
     '',
     'เงื่อนไขการชำระเงิน: ชำระค่าบริการล่วงหน้าก่อนเริ่มบริการทุกครั้ง / เงินประกันคืนเมื่อสิ้นสุดสัญญาหากไม่มีค่าใช้จ่ายค้างชำระ',
@@ -2978,7 +3091,7 @@ function openInvoice(payload, refId){
         ${assessmentFee ? `<tr><td>ค่าประเมินหน้างาน</td><td class="amt">฿${assessmentFee.toLocaleString()}</td></tr>` : ''}
         ${depositDue ? `<tr><td>เงินประกันสัญญา (ชำระครั้งแรก)</td><td class="amt">฿${deposit.toLocaleString()}</td></tr>` : `<tr><td>เงินประกันสัญญา</td><td class="amt" style="color:var(--ink-faint);">${escapeHtml(payload.depositStatus||'—')}</td></tr>`}
         ` : ''}
-        ${procTotal ? `<tr><td>${isPackage ? 'บริการหัตถการเสริม' : 'ค่าบริการหัตถการ'} (${escapeHtml(payload.zoneLabel||'')})${procItems.length ? '<br><span style="font-size:11px; color:var(--ink-faint);">'+escapeHtml(procItems.join(', '))+'</span>' : ''}</td><td class="amt">฿${procTotal.toLocaleString()}</td></tr>` : ''}
+        ${procTotal ? `<tr><td>${isPackage ? 'บริการหัตถการเสริม' : 'ค่าบริการหัตถการ'}${payload.zoneLabel ? ' ('+escapeHtml(payload.zoneLabel)+')' : ''}${procItems.length ? '<br><span style="font-size:11px; color:var(--ink-faint);">'+escapeHtml(procItems.join(', '))+'</span>' : ''}</td><td class="amt">฿${procTotal.toLocaleString()}</td></tr>` : ''}
         <tr class="inv-total-row"><td>ยอดชำระในการเริ่มบริการครั้งนี้</td><td class="amt">฿${total.toLocaleString()}</td></tr>
       </tbody>
     </table>
@@ -3212,8 +3325,11 @@ function fillFormFromRecord(r){
   const zoneMatch = String(r['โซนบริการ'] || '').match(/([A-C])/);
   const zoneCode = zoneMatch ? zoneMatch[1] : null;
   const procText = String(r['รายการหัตถการ'] || '');
-  const matchedProcKeys = Object.keys(PROCEDURES).filter(k => procText.includes(PROCEDURES[k].name));
-  const matchedCustomItems = extractCustomProcItems(procText, matchedProcKeys);
+  const procSegments = procText.split('; ').filter(Boolean);
+  const nonManualSegments = procSegments.filter(seg => !seg.includes('(กรอกราคาเอง)')).join('; ');
+  const matchedProcKeys = Object.keys(PROCEDURES).filter(k => nonManualSegments.includes(PROCEDURES[k].name));
+  const matchedCustomItems = extractCustomProcItems(nonManualSegments, matchedProcKeys);
+  const matchedManualPrices = extractManualPriceItems(procText);
 
   if(r['ประเภทเคส'] === 'บริการหัตถการครั้งเดียว'){
     state.serviceType = 'procedure';
@@ -3231,7 +3347,9 @@ function fillFormFromRecord(r){
     }
     matchedProcKeys.forEach(k => state.procedures.add(k));
     state.customProcedures = matchedCustomItems;
+    state.procManualPrices = matchedManualPrices;
     buildProcChecklist(document.getElementById('procChecklist'), ()=>state.procZone, state.procedures, refreshProcSubtotal);
+    buildManualPriceChecklist(document.getElementById('procManualChecklist'), state.procManualPrices, refreshProcSubtotal);
     renderCustomProcList('procCustomList', ()=>state.customProcedures, refreshProcSubtotal);
     refreshProcSubtotal();
   } else if(r['ประเภทเคส'] === 'คอร์ส/โปรแกรมบริการ'){
@@ -3287,14 +3405,16 @@ function fillFormFromRecord(r){
         updateCourseSubtotal();
       }
     }
-  } else if(matchedProcKeys.length || matchedCustomItems.length){
+  } else if(matchedProcKeys.length || matchedCustomItems.length || Object.keys(matchedManualPrices).length){
     if(zoneCode){
       state.addonZone = zoneCode;
       document.querySelector(`#addonZoneRow .radio-chip[data-val="${zoneCode}"]`)?.classList.add('checked');
     }
     matchedProcKeys.forEach(k => state.addonProcedures.add(k));
     state.customAddonProcedures = matchedCustomItems;
+    state.addonManualPrices = matchedManualPrices;
     buildProcChecklist(document.getElementById('addonChecklist'), ()=>state.addonZone, state.addonProcedures, refreshAddonSubtotal);
+    buildManualPriceChecklist(document.getElementById('addonManualChecklist'), state.addonManualPrices, refreshAddonSubtotal);
     renderCustomProcList('addonCustomList', ()=>state.customAddonProcedures, refreshAddonSubtotal);
     refreshAddonSubtotal();
     toggleAddonSection(true);
