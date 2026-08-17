@@ -199,7 +199,8 @@
     width:56px; height:56px; border-radius:16px; background:#FFFFFF; box-shadow:0 4px 14px -4px rgba(0,0,0,.35);
     display:flex; align-items:center; justify-content:center; margin:0 auto 16px;
   }
-  .hero-title{font-family:'Taviraj'; font-weight:700; font-size:26px; color:#fff; text-shadow:0 2px 10px rgba(0,0,0,.25); margin-bottom:10px;}
+  .hero-title{font-family:'Taviraj'; font-weight:700; font-size:26px; color:#fff; text-shadow:0 2px 10px rgba(0,0,0,.25); margin-bottom:6px;}
+  .hero-tagline{font-size:14.5px; font-weight:600; font-style:italic; color:rgba(255,255,255,.92); margin-bottom:10px;}
   .hero-sub{font-size:14px; color:rgba(255,255,255,.9); max-width:480px; margin:0 auto 18px; line-height:1.6;}
   .hero-pills{display:flex; flex-wrap:wrap; justify-content:center; gap:9px; margin-bottom:14px;}
   .hero-pill{
@@ -231,6 +232,7 @@
   .quick-card.qc-c .qc-icon{background:rgba(58,47,13,.15);}
   .quick-card.qc-d{background:var(--surface); border:none; color:var(--ink);}
   .quick-card.qc-d .qc-icon{background:var(--paper-dim);}
+  .quick-card.qc-e{background:linear-gradient(135deg, #C23E72, #F0568F); color:#fff;}
 
   .jump-nav-home{
     flex-shrink:0; display:flex; align-items:center; justify-content:center;
@@ -848,8 +850,9 @@
         <div class="hero-mark">
           <img src="data:image/png;base64,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" alt="Payap Health Care logo" style="width:80%; height:80%; object-fit:contain;">
         </div>
-        <div class="hero-title">ดูแลทุกก้าว ใกล้ชิดทุกเคส</div>
-        <div class="hero-sub">บันทึกข้อมูลผู้รับบริการ จัดการแพ็กเกจ และติดตามการดูแลที่บ้าน ได้ในหน้าจอเดียว</div>
+        <div class="hero-title">Payap Health Care</div>
+        <div class="hero-tagline">Care for every business, Care for every life</div>
+        <div class="hero-sub">Payap Health Care คือพันธมิตรที่ช่วยให้องค์กรทั่วประเทศสร้างระบบการดูแลสุขภาพของพนักงานและลูกค้าด้วยเครือข่ายบุคลากรสุขภาพเปี่ยมคุณภาพครอบคลุมทุกภูมิภาค ด้วยมาตรฐานเดียวกัน</div>
         <div class="hero-pills">
           <span class="hero-pill">ครบทุกประเภทบริการ</span>
           <span class="hero-pill">อัปเดตเรียลไทม์</span>
@@ -873,6 +876,11 @@
           <span class="qc-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M9 4a4 4 0 0 0-4 4c0 1.2.5 2 1 2.7C5.4 11.6 5 12.7 5 14a4 4 0 0 0 4 4h1v2h4v-2h1a4 4 0 0 0 4-4c0-1.3-.4-2.4-1-3.3.5-.7 1-1.5 1-2.7a4 4 0 0 0-4-4 4 4 0 0 0-3-1.3A4 4 0 0 0 9 4Z" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
           <span class="qc-text"><span class="qc-title">คอร์ส/โปรแกรม</span>
             <span class="qc-sub">กายภาพบำบัด · กิจกรรมบำบัด · ผู้สูงวัย</span></span>
+        </button>
+        <button class="quick-card qc-e" data-start="vip">
+          <span class="qc-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 21s-7-4.35-9.5-8.5C.7 8.9 2.4 5 6 5c2 0 3.4 1 4 2 .6-1 2-2 4-2 3.6 0 5.3 3.9 3.5 7.5C19 16.65 12 21 12 21Z" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span class="qc-text"><span class="qc-title">VIP Room Care</span>
+            <span class="qc-sub">ห้องพิเศษ รพ. · RN/PN/NA/CG</span></span>
         </button>
         <button class="quick-card qc-d" data-goto="records">
           <span class="qc-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M4 6h16M4 12h16M4 18h10" stroke="var(--teal-700)" stroke-width="1.8" stroke-linecap="round"/></svg></span>
@@ -967,6 +975,12 @@
                 <span class="case-tab-icon">🎟️</span>
                 <span class="case-tab-label">คอร์ส/โปรแกรม<br>บริการ</span>
               </label>
+              <label class="radio-chip" data-val="vip">
+                <input type="radio" name="serviceType" value="vip">
+                <span class="dot"></span>
+                <span class="case-tab-icon">🏥</span>
+                <span class="case-tab-label">VIP Room Care<br>(รพ.)</span>
+              </label>
             </div>
           </div>
 
@@ -1057,6 +1071,23 @@
               </div>
             </div>
             <div class="proc-subtotal" id="courseSubtotal">เลือกโปรแกรมและแพ็กเกจเพื่อดูราคา</div>
+          </div>
+
+          <div id="vipPanel" class="case-panel" style="display:none;">
+            <div class="case-panel-label">🏥 VIP Room Care (บริการดูแลผู้ป่วยห้องพิเศษ — โรงพยาบาล)</div>
+            <div class="field" style="margin-bottom:14px;">
+              <label>แพ็กเกจชั่วโมง<span class="req">*</span></label>
+              <div class="radio-row" id="vipPackageRow"></div>
+            </div>
+            <div class="field" style="margin-bottom:14px;">
+              <label>ตำแหน่งเจ้าหน้าที่ที่ต้องการ<span class="req">*</span></label>
+              <div class="radio-row" id="vipStaffRow"></div>
+            </div>
+            <div class="field" style="margin-bottom:14px;">
+              <label>จำนวนวันที่ต้องการ<span class="req">*</span></label>
+              <input type="number" id="f_vipDays" placeholder="เช่น 7" min="1" step="1">
+            </div>
+            <div class="proc-subtotal" id="vipSubtotal">เลือกแพ็กเกจชั่วโมงและตำแหน่งเจ้าหน้าที่เพื่อดูยอดรวม</div>
           </div>
         </div>
 
@@ -1550,6 +1581,26 @@ function courseOptionPrice(programKey, optionKey, patientType){
   return prog.hasPatientType ? (patientType === 'IPD' ? opt.priceIPD : opt.priceOPD) : opt.price;
 }
 
+/* ============ VIP ROOM CARE (บริการดูแลผู้ป่วยห้องพิเศษ — โรงพยาบาล) ============
+   ราคาจากสื่อโปรโมทของ Payap Health Care: อัตรา/วัน แยกตามตำแหน่งเจ้าหน้าที่ × แพ็กเกจชั่วโมง
+   คิดยอดรวม = อัตรา/วัน × จำนวนวันที่ต้องการ (กรอกเองต่อเคส) */
+const VIP_ROOM_CARE = {
+  packages: {
+    p8:  { label: '8 ชั่วโมง/วัน',  hours: 8,  rates: { RN:1500, PN:850,  NA:750, CG:700 } },
+    p12: { label: '12 ชั่วโมง/วัน', hours: 12, rates: { RN:1900, PN:1200, NA:900, CG:900 } }
+  },
+  staffTypes: {
+    RN: 'พยาบาลวิชาชีพ (RN)',
+    PN: 'พยาบาลเทคนิค (PN)',
+    NA: 'ผู้ช่วยพยาบาล (NA)',
+    CG: 'ผู้ดูแล (Caregiver / CG)'
+  }
+};
+function vipRate(pkgCode, staffCode){
+  if(!pkgCode || !staffCode) return 0;
+  return VIP_ROOM_CARE.packages[pkgCode]?.rates[staffCode] || 0;
+}
+
 /* ============ STATE ============ */
 let state = {
   pkg: null, format: null, equipment: new Set(),
@@ -1557,6 +1608,7 @@ let state = {
   procZone: null, procedures: new Set(), customProcedures: [], procManualPrices: {},
   addonZone: null, addonProcedures: new Set(), customAddonProcedures: [], addonManualPrices: {},
   courseProgram: null, courseOption: null, coursePurchaseType: 'bundle', coursePatientType: 'OPD', courseTherapistType: 'pt',
+  vipPackage: null, vipStaffType: null, vipDays: null,
   billingEntity: BILLING_ENTITY_CONFIG.package.name
 };
 /* TODO: แทนที่ด้วย Google Apps Script Web App URL ของลูกค้าใหม่ (สร้าง Google Sheet + Apps Script ของตัวเอง) */
@@ -1706,6 +1758,7 @@ document.querySelectorAll('#serviceTypeRow .radio-chip').forEach(chip=>{
     document.getElementById('packagePanel').style.display = state.serviceType === 'package' ? '' : 'none';
     document.getElementById('procedurePanel').style.display = state.serviceType === 'procedure' ? '' : 'none';
     document.getElementById('coursePanel').style.display = state.serviceType === 'course' ? '' : 'none';
+    document.getElementById('vipPanel').style.display = state.serviceType === 'vip' ? '' : 'none';
     document.querySelectorAll('.package-only').forEach(el=>{
       el.style.display = state.serviceType === 'package' ? '' : 'none';
     });
@@ -1842,6 +1895,71 @@ buildZoneRow(procZoneRow, code=>{
 });
 buildProcChecklist(document.getElementById('procChecklist'), ()=>state.procZone, state.procedures, refreshProcSubtotal);
 buildManualPriceChecklist(document.getElementById('procManualChecklist'), state.procManualPrices, refreshProcSubtotal);
+
+/* ============ VIP ROOM CARE PICKERS ============ */
+function buildVipPackageRow(){
+  const container = document.getElementById('vipPackageRow');
+  container.innerHTML = '';
+  Object.entries(VIP_ROOM_CARE.packages).forEach(([code, p])=>{
+    const chip = document.createElement('label');
+    chip.className = 'radio-chip' + (state.vipPackage === code ? ' checked' : '');
+    chip.dataset.val = code;
+    chip.innerHTML = `<input type="radio" name="vipPackageRow" ${state.vipPackage===code?'checked':''}><span class="dot"></span> ${p.label}`;
+    chip.addEventListener('click', ()=>{
+      container.querySelectorAll('.radio-chip').forEach(c=>c.classList.remove('checked'));
+      chip.classList.add('checked');
+      state.vipPackage = code;
+      buildVipStaffRow();
+      refreshVipSubtotal();
+      updateSummary();
+    });
+    container.appendChild(chip);
+  });
+}
+function buildVipStaffRow(){
+  const container = document.getElementById('vipStaffRow');
+  container.innerHTML = '';
+  Object.entries(VIP_ROOM_CARE.staffTypes).forEach(([code, label])=>{
+    const chip = document.createElement('label');
+    chip.className = 'radio-chip' + (state.vipStaffType === code ? ' checked' : '');
+    chip.dataset.val = code;
+    const rate = state.vipPackage ? vipRate(state.vipPackage, code) : null;
+    chip.innerHTML = `<input type="radio" name="vipStaffRow" ${state.vipStaffType===code?'checked':''}><span class="dot"></span> ${label}${rate!=null ? ' — ฿'+rate.toLocaleString()+'/วัน' : ''}`;
+    chip.addEventListener('click', ()=>{
+      container.querySelectorAll('.radio-chip').forEach(c=>c.classList.remove('checked'));
+      chip.classList.add('checked');
+      state.vipStaffType = code;
+      refreshVipSubtotal();
+      updateSummary();
+    });
+    container.appendChild(chip);
+  });
+}
+function vipTotal(){
+  const rate = vipRate(state.vipPackage, state.vipStaffType);
+  const days = Number(state.vipDays) || 0;
+  return rate * days;
+}
+function refreshVipSubtotal(){
+  const el = document.getElementById('vipSubtotal');
+  if(!state.vipPackage || !state.vipStaffType){
+    el.innerHTML = 'เลือกแพ็กเกจชั่วโมงและตำแหน่งเจ้าหน้าที่เพื่อดูยอดรวม';
+    return;
+  }
+  const rate = vipRate(state.vipPackage, state.vipStaffType);
+  const days = Number(state.vipDays) || 0;
+  const total = rate * days;
+  el.innerHTML = days
+    ? `<span>ยอดรวม (฿${rate.toLocaleString()}/วัน × ${days} วัน)</span><span class="amt">฿${total.toLocaleString()}</span>`
+    : `<span>อัตรา ฿${rate.toLocaleString()}/วัน</span><span class="amt">ระบุจำนวนวัน</span>`;
+}
+buildVipPackageRow();
+buildVipStaffRow();
+document.getElementById('f_vipDays').addEventListener('input', e=>{
+  state.vipDays = e.target.value;
+  refreshVipSubtotal();
+  updateSummary();
+});
 
 function refreshProcSubtotal(){
   const total = procSetTotal(state.procZone, state.procedures, state.customProcedures, state.procManualPrices);
@@ -2120,6 +2238,8 @@ function updateMobileTotal(){
       const opt = prog.options[state.courseOption];
       total = isSingle ? opt.singleSession : courseOptionPrice(state.courseProgram, state.courseOption, state.coursePatientType);
     }
+  } else if(state.serviceType === 'vip'){
+    total = vipTotal();
   }
   el.textContent = 'ยอดรวม ฿' + total.toLocaleString();
 }
@@ -2222,6 +2342,29 @@ function updateSummary(){
     return;
   }
 
+  if(state.serviceType === 'vip'){
+    if(!state.vipPackage || !state.vipStaffType){
+      body.innerHTML = `<div class="clip-empty"><div class="big">ยังไม่ได้เลือกแพ็กเกจ</div>เลือกแพ็กเกจชั่วโมงและตำแหน่งเจ้าหน้าที่ทางซ้ายเพื่อดูยอดรวม</div>`;
+      return;
+    }
+    const rate = vipRate(state.vipPackage, state.vipStaffType);
+    const days = Number(state.vipDays) || 0;
+    const total = rate * days;
+    body.innerHTML = `
+      <div class="clip-header">
+        <div class="clip-pkgname">VIP Room Care</div>
+        <div class="clip-pkgtag">${VIP_ROOM_CARE.packages[state.vipPackage].label}</div>
+      </div>
+      <div class="clip-fee">
+        <span class="lbl">${VIP_ROOM_CARE.staffTypes[state.vipStaffType]}</span>
+        <span class="val">฿${rate.toLocaleString()}/วัน</span>
+      </div>
+      ${days ? `<div class="clip-row"><span>จำนวนวัน</span><b>${days} วัน</b></div>
+      <div class="clip-row"><span>ยอดรวม</span><b>฿${total.toLocaleString()}</b></div>` : `<div class="clip-row"><span>ระบุจำนวนวันเพื่อดูยอดรวม</span></div>`}
+    `;
+    return;
+  }
+
   if(!state.pkg){
     body.innerHTML = `<div class="clip-empty"><div class="big">ยังไม่ได้เลือกแพ็กเกจ</div>เลือกแพ็กเกจทางซ้ายเพื่อดูสรุปแผนการดูแลและค่าบริการโดยประมาณ</div>`;
     return;
@@ -2319,6 +2462,7 @@ function resetForm(){
     serviceType:'package', procZone:null, procedures:new Set(), customProcedures:[], procManualPrices:{},
     addonZone:null, addonProcedures:new Set(), customAddonProcedures:[], addonManualPrices:{},
     courseProgram:null, courseOption:null, coursePurchaseType:'bundle', coursePatientType:'OPD', courseTherapistType:'pt',
+    vipPackage:null, vipStaffType:null, vipDays:null,
     billingEntity: BILLING_ENTITY_CONFIG.package.name
   };
   updateBillingEntity();
@@ -2331,6 +2475,7 @@ function resetForm(){
   document.getElementById('packagePanel').style.display = '';
   document.getElementById('procedurePanel').style.display = 'none';
   document.getElementById('coursePanel').style.display = 'none';
+  document.getElementById('vipPanel').style.display = 'none';
   document.querySelectorAll('.package-only').forEach(el=> el.style.display = '');
 
   document.getElementById('procChecklist').innerHTML = '';
@@ -2479,7 +2624,8 @@ function collectDraftSnapshot(){
       addonZone: state.addonZone, addonProcedures: Array.from(state.addonProcedures), customAddonProcedures: state.customAddonProcedures, addonManualPrices: state.addonManualPrices,
       courseProgram: state.courseProgram, courseOption: state.courseOption,
       coursePurchaseType: state.coursePurchaseType, coursePatientType: state.coursePatientType,
-      courseTherapistType: state.courseTherapistType
+      courseTherapistType: state.courseTherapistType,
+      vipPackage: state.vipPackage, vipStaffType: state.vipStaffType, vipDays: state.vipDays
     },
     editingId,
     savedAt: Date.now()
@@ -2571,6 +2717,19 @@ function applyDraftState(ds){
     if(ds.courseOption){
       const card = document.querySelector(`#courseOptionGrid .pkg-card[data-key="${ds.courseOption}"]`);
       if(card) card.click();
+    }
+  } else if(ds.serviceType === 'vip'){
+    if(ds.vipPackage){
+      const chip = document.querySelector(`#vipPackageRow .radio-chip[data-val="${ds.vipPackage}"]`);
+      if(chip) chip.click();
+    }
+    if(ds.vipStaffType){
+      const chip = document.querySelector(`#vipStaffRow .radio-chip[data-val="${ds.vipStaffType}"]`);
+      if(chip) chip.click();
+    }
+    if(ds.vipDays){
+      state.vipDays = ds.vipDays;
+      refreshVipSubtotal();
     }
   }
   updateBillingEntity();
@@ -2696,11 +2855,16 @@ async function saveRecord(){
     const prog = COURSE_PROGRAMS[state.courseProgram];
     const isFlatSingle = state.coursePurchaseType === 'single' && prog.singleSessionRate;
     if(!isFlatSingle && !state.courseOption){ return markInvalid('courseOptionField', 'กรุณาเลือกแพ็กเกจคอร์ส'); }
+  } else if(state.serviceType === 'vip'){
+    if(!state.vipPackage){ return markInvalid('vipPackageRow', 'กรุณาเลือกแพ็กเกจชั่วโมง'); }
+    if(!state.vipStaffType){ return markInvalid('vipStaffRow', 'กรุณาเลือกตำแหน่งเจ้าหน้าที่'); }
+    if(!state.vipDays || Number(state.vipDays) <= 0){ return markInvalid('f_vipDays', 'กรุณาระบุจำนวนวันที่ต้องการ'); }
   }
 
   const isPackage = state.serviceType === 'package';
   const isProcedure = state.serviceType === 'procedure';
   const isCourse = state.serviceType === 'course';
+  const isVip = state.serviceType === 'vip';
 
   const procTotal = isPackage ? procSetTotal(state.addonZone, state.addonProcedures, state.customAddonProcedures, state.addonManualPrices) : (isProcedure ? procSetTotal(state.procZone, state.procedures, state.customProcedures, state.procManualPrices) : 0);
   const procZoneUsed = isPackage ? state.addonZone : (isProcedure ? state.procZone : null);
@@ -2767,11 +2931,16 @@ async function saveRecord(){
     remarks: document.getElementById('f_remarks').value,
     recordedBy: document.getElementById('f_recordedBy').value,
     billingEntity: state.billingEntity,
-    serviceTypeLabel: isPackage ? 'แพ็กเกจรายเดือน' : (isProcedure ? 'บริการหัตถการครั้งเดียว' : 'คอร์ส/โปรแกรมบริการ'),
+    serviceTypeLabel: isPackage ? 'แพ็กเกจรายเดือน' : (isProcedure ? 'บริการหัตถการครั้งเดียว' : (isCourse ? 'คอร์ส/โปรแกรมบริการ' : 'VIP Room Care')),
     zoneLabel: procZoneUsed ? ZONES[procZoneUsed].label.split(' ·')[0] : '',
     procedureListText: procListText(procZoneUsed, procSetUsed, procCustomUsed, procManualUsed),
     procedureTotal: procTotal || '',
     courseProgramLabel, courseOptionLabel, courseSessionsTotal, courseSessionsUsed, courseTotalPrice,
+    vipPackageLabel: isVip && state.vipPackage ? VIP_ROOM_CARE.packages[state.vipPackage].label : '',
+    vipStaffLabel: isVip && state.vipStaffType ? VIP_ROOM_CARE.staffTypes[state.vipStaffType] : '',
+    vipDailyRate: isVip ? vipRate(state.vipPackage, state.vipStaffType) || '' : '',
+    vipDays: isVip ? (document.getElementById('f_vipDays').value || '') : '',
+    vipTotal: isVip ? vipTotal() || '' : '',
     clientRequestId: genRequestId()
   };
   const isEditing = !!editingId;
@@ -2970,6 +3139,90 @@ function openInvoice(payload, refId){
               <tbody>
                 <tr><td>${escapeHtml(payload.courseOptionLabel||'คอร์สบริการ')}${isSingleVisit ? '' : ' ('+total+' ครั้ง)'}</td><td class="amt">฿${price.toLocaleString()}</td></tr>
                 <tr class="inv-total-row"><td>${isSingleVisit ? 'ยอดชำระ' : 'ยอดชำระทั้งคอร์ส'}</td><td class="amt">฿${price.toLocaleString()}</td></tr>
+              </tbody>
+            </table>
+            ${signatureBlockHtml(payload)}
+            <div class="inv-footer">ขอบคุณที่ไว้วางใจให้ ${escapeHtml(payload.billingEntity || BILLING_ENTITY_CONFIG.package.name)} ดูแลคนที่คุณรัก</div>
+          </td></tr>
+        </tbody>
+      </table>
+    `;
+    invoiceModal.classList.add('show');
+    return;
+  }
+
+  if(payload.serviceTypeLabel === 'VIP Room Care'){
+    const rate = Number(payload.vipDailyRate) || 0;
+    const days = Number(payload.vipDays) || 0;
+    const total = Number(payload.vipTotal) || (rate * days);
+
+    lastInvoiceText = [
+      `${payload.billingEntity || BILLING_ENTITY_CONFIG.package.name} — ใบสรุป VIP Room Care`,
+      billingEntityConfig(payload.billingEntity).subtitle,
+      `เลขที่เอกสาร: ${docNo}`,
+      `วันที่ออกเอกสาร: ${today.toLocaleDateString('th-TH', {year:'numeric', month:'long', day:'numeric'})}`,
+      '',
+      `ผู้รับบริการ: ${payload.clientName} (อายุ ${payload.age||'—'} ปี, ${payload.gender||'—'})`,
+      `ที่อยู่: ${payload.address || 'ยังไม่ระบุ'}`,
+      `ผู้ติดต่อ: ${payload.contactName||'—'} (${payload.contactRelation||'—'}) โทร ${payload.contactPhone||'—'}`,
+      '',
+      `แพ็กเกจ: ${payload.vipPackageLabel||'—'}`,
+      `ตำแหน่งเจ้าหน้าที่: ${payload.vipStaffLabel||'—'}`,
+      `อัตรา: ฿${rate.toLocaleString()}/วัน × ${days} วัน`,
+      `วันเริ่มบริการ: ${cleanDateDisplay(payload.startDate)}`,
+      `เจ้าหน้าที่ผู้ดูแล: ${payload.caregiver||'แจ้งภายหลัง'}`,
+      '',
+      `ยอดชำระ: ฿${total.toLocaleString()}`,
+      '',
+      (billingEntityConfig(payload.billingEntity).signature ? `ลงชื่อ ...................................... (${billingEntityConfig(payload.billingEntity).signature})` : ''),
+      '',
+      `ขอบคุณที่ไว้วางใจให้ ${payload.billingEntity || BILLING_ENTITY_CONFIG.package.name} ดูแลคนที่คุณรัก`
+    ].filter(Boolean).join('\n');
+
+    document.getElementById('invoiceBody').innerHTML = `
+      <table class="inv-wrapper-table">
+        <thead class="inv-thead">
+          <tr><td>
+            <div class="inv-head" style="margin-bottom: 20px;">
+              <div class="inv-brand">
+                <div class="inv-brand-mark">${invoiceLogoImg(payload)}</div>
+                <div>
+                  <div class="inv-brand-name">${escapeHtml(payload.billingEntity || BILLING_ENTITY_CONFIG.package.name)}</div>
+                  ${clinicFullNameLine(payload)}
+                  <div class="inv-brand-sub">ใบสรุป VIP Room Care</div>
+                </div>
+              </div>
+              <div class="inv-meta">
+                เลขที่เอกสาร <b>${docNo}</b><br>
+                วันที่ออกเอกสาร <b>${today.toLocaleDateString('th-TH', {year:'numeric', month:'long', day:'numeric'})}</b>
+              </div>
+            </div>
+          </td></tr>
+        </thead>
+        <tbody class="inv-tbody">
+          <tr><td>
+            <div class="inv-cols">
+              <div>
+                <div class="inv-block-lbl">ผู้รับบริการ</div>
+                <div class="inv-line"><b>${escapeHtml(payload.clientName)}</b></div>
+                <div class="inv-line"><span>อายุ ${escapeHtml(payload.age||'—')} ปี · ${escapeHtml(payload.gender||'—')}</span></div>
+              </div>
+              <div>
+                <div class="inv-block-lbl">เรียนแจ้งถึงผู้ติดต่อ</div>
+                <div class="inv-line"><b>${escapeHtml(payload.contactName || '—')}</b> <span>${payload.contactRelation ? '('+escapeHtml(payload.contactRelation)+')' : ''}</span></div>
+                <div class="inv-line"><span>โทร ${escapeHtml(payload.contactPhone || '—')}</span></div>
+              </div>
+            </div>
+            <div class="inv-service-box">
+              <div class="inv-service-row"><span>แพ็กเกจ</span><b>${escapeHtml(payload.vipPackageLabel || '—')}</b></div>
+              <div class="inv-service-row"><span>ตำแหน่งเจ้าหน้าที่</span><b>${escapeHtml(payload.vipStaffLabel || '—')}</b></div>
+              <div class="inv-service-row"><span>เจ้าหน้าที่ผู้ดูแล</span><b>${escapeHtml(payload.caregiver || 'แจ้งภายหลัง')}</b></div>
+            </div>
+            <table class="inv-charges">
+              <thead><tr><th>รายการ</th><th style="text-align:right;">จำนวนเงิน (บาท)</th></tr></thead>
+              <tbody>
+                <tr><td>${escapeHtml(payload.vipStaffLabel||'เจ้าหน้าที่')} (${escapeHtml(payload.vipPackageLabel||'')})<br><span style="font-size:11px; color:var(--ink-faint);">฿${rate.toLocaleString()}/วัน × ${days} วัน</span></td><td class="amt">฿${total.toLocaleString()}</td></tr>
+                <tr class="inv-total-row"><td>ยอดชำระ</td><td class="amt">฿${total.toLocaleString()}</td></tr>
               </tbody>
             </table>
             ${signatureBlockHtml(payload)}
@@ -3410,6 +3663,28 @@ function fillFormFromRecord(r){
         updateCourseSubtotal();
       }
     }
+  } else if(r['ประเภทเคส'] === 'VIP Room Care'){
+    state.serviceType = 'vip';
+    document.querySelectorAll('#serviceTypeRow .radio-chip').forEach(c=>c.classList.remove('checked'));
+    const vipChip = document.querySelector('#serviceTypeRow .radio-chip[data-val="vip"]');
+    vipChip.classList.add('checked');
+    vipChip.querySelector('input').checked = true;
+    document.getElementById('packagePanel').style.display = 'none';
+    document.getElementById('vipPanel').style.display = '';
+    document.querySelectorAll('.package-only').forEach(el=> el.style.display = 'none');
+
+    const vipPkgKey = Object.keys(VIP_ROOM_CARE.packages).find(k => VIP_ROOM_CARE.packages[k].label === (r['แพ็กเกจ VIP Room Care'] || r['vipPackageLabel']));
+    const vipStaffKey = Object.keys(VIP_ROOM_CARE.staffTypes).find(k => VIP_ROOM_CARE.staffTypes[k] === (r['ตำแหน่งเจ้าหน้าที่ VIP'] || r['vipStaffLabel']));
+    if(vipPkgKey) state.vipPackage = vipPkgKey;
+    if(vipStaffKey) state.vipStaffType = vipStaffKey;
+    buildVipPackageRow();
+    buildVipStaffRow();
+    const vipDaysVal = r['จำนวนวัน VIP'] || r['vipDays'];
+    if(vipDaysVal){
+      document.getElementById('f_vipDays').value = vipDaysVal;
+      state.vipDays = vipDaysVal;
+    }
+    refreshVipSubtotal();
   } else if(matchedProcKeys.length || matchedCustomItems.length || Object.keys(matchedManualPrices).length){
     if(zoneCode){
       state.addonZone = zoneCode;
@@ -3517,7 +3792,8 @@ function getSortValue(r, key){
   if(key === 'ค่าบริการต่อเดือน (บาท)'){
     const isProc = r['ประเภทเคส'] === 'บริการหัตถการครั้งเดียว';
     const isCourse = r['ประเภทเคส'] === 'คอร์ส/โปรแกรมบริการ';
-    const fee = isProc ? r['ค่าบริการหัตถการ (บาท)'] : (isCourse ? r['ราคาคอร์สรวม (บาท)'] : r['ค่าบริการต่อเดือน (บาท)']);
+    const isVip = r['ประเภทเคส'] === 'VIP Room Care';
+    const fee = isProc ? r['ค่าบริการหัตถการ (บาท)'] : (isCourse ? r['ราคาคอร์สรวม (บาท)'] : (isVip ? (r['ค่าบริการ VIP Room Care (บาท)'] || r['vipTotal']) : r['ค่าบริการต่อเดือน (บาท)']));
     return Number(fee) || 0;
   }
   return (r[key] || '').toString().toLowerCase();
@@ -3593,7 +3869,8 @@ function renderRecords(){
     const cls = STATUS_CLASS[r['สถานะ']] || 'st-wait';
     const isProc = r['ประเภทเคส'] === 'บริการหัตถการครั้งเดียว';
     const isCourse = r['ประเภทเคส'] === 'คอร์ส/โปรแกรมบริการ';
-    const fee = isProc ? r['ค่าบริการหัตถการ (บาท)'] : (isCourse ? r['ราคาคอร์สรวม (บาท)'] : r['ค่าบริการต่อเดือน (บาท)']);
+    const isVip = r['ประเภทเคส'] === 'VIP Room Care';
+    const fee = isProc ? r['ค่าบริการหัตถการ (บาท)'] : (isCourse ? r['ราคาคอร์สรวม (บาท)'] : (isVip ? (r['ค่าบริการ VIP Room Care (บาท)'] || r['vipTotal']) : r['ค่าบริการต่อเดือน (บาท)']));
     let pkgCell;
     if(isProc){
       pkgCell = `<div class="cell-name" style="font-size:12.5px;">หัตถการครั้งเดียว</div><div class="cell-sub">${escapeHtml(r['โซนบริการ']||'')}</div>`;
@@ -3609,13 +3886,17 @@ function renderRecords(){
         sub = `<span style="${remaining<=2 && remaining>=0 ? 'color:var(--rose); font-weight:600;' : ''}">ใช้ไป ${used}/${total} · เหลือ ${remaining}</span>`;
       }
       pkgCell = `<div class="cell-name" style="font-size:12.5px;">${escapeHtml(r['แพ็กเกจคอร์ส']||'คอร์สบริการ')}</div><div class="cell-sub">${sub}</div>`;
+    } else if(isVip){
+      const vipPkgLabel = r['แพ็กเกจ VIP Room Care'] || r['vipPackageLabel'] || 'VIP Room Care';
+      const vipStaffLabel = r['ตำแหน่งเจ้าหน้าที่ VIP'] || r['vipStaffLabel'] || '';
+      pkgCell = `<div class="cell-name" style="font-size:12.5px;">${escapeHtml(vipPkgLabel)}</div><div class="cell-sub">${escapeHtml(vipStaffLabel)}</div>`;
     } else {
       pkgCell = escapeHtml(r['แพ็กเกจ']||'—') + (Number(r['ค่าบริการหัตถการ (บาท)'])>0 ? `<div class="cell-sub">+ หัตถการเสริม ${escapeHtml(r['โซนบริการ']||'')}</div>` : '');
     }
     return `<tr>
       <td><div class="cell-name">${escapeHtml(r['ชื่อผู้รับบริการ']||'—')}</div><div class="cell-sub">${escapeHtml(r['ผู้ติดต่อ']||'')}</div></td>
       <td>${pkgCell}</td>
-      <td>${(isProc || isCourse) ? '—' : escapeHtml(r['รูปแบบบริการ']||'—')}</td>
+      <td>${(isProc || isCourse || isVip) ? '—' : escapeHtml(r['รูปแบบบริการ']||'—')}</td>
       <td>${escapeHtml(cleanDateDisplay(r['วันเริ่มบริการ']))}</td>
       <td><span class="badge ${cls}">${escapeHtml(r['สถานะ']||'—')}</span></td>
       <td class="font-mono">${fee ? '฿'+Number(fee).toLocaleString() : '—'}</td>
@@ -3838,7 +4119,7 @@ function buildPriceKB(){
 
 const FAQ_KB = [
   { keywords:'บันทึกเคสใหม่ เพิ่มเคส สร้างเคส สร้างข้อมูลใหม่ เริ่มบันทึก',
-    answer:'ไปที่แท็บ "หน้าแรก" แล้วเลือกการ์ดประเภทบริการที่ต้องการ (แพ็กเกจรายเดือน / บริการหัตถการ / คอร์ส) ระบบจะพาไปหน้าฟอร์มพร้อมตั้งค่าประเภทเคสให้อัตโนมัติ' },
+    answer:'ไปที่แท็บ "หน้าแรก" แล้วเลือกการ์ดประเภทบริการที่ต้องการ (แพ็กเกจรายเดือน / บริการหัตถการ / คอร์ส / VIP Room Care) ระบบจะพาไปหน้าฟอร์มพร้อมตั้งค่าประเภทเคสให้อัตโนมัติ' },
   { keywords:'แก้ไขข้อมูล แก้ไขเคส อัปเดตข้อมูล แก้ไขรายการ',
     answer:'ไปที่แท็บ "รายการทั้งหมด" กดไอคอนดินสอที่แถวรายการนั้น ระบบจะดึงข้อมูลเดิมมาให้แก้ในฟอร์ม กดบันทึกแล้วจะอัปเดตแถวเดิมในชีต ไม่สร้างแถวใหม่' },
   { keywords:'ค้นหา กรอง filter รายการ หา',
@@ -3861,6 +4142,8 @@ const FAQ_KB = [
     answer:'บริการหัตถการครั้งเดียวคิดราคาตามโซน: Zone A ใกล้ศูนย์ ≤10 กม., Zone B ระยะกลาง 10–20 กม., Zone C ระยะไกล 20–35 กม. จากศูนย์' },
   { keywords:'เพิ่มหัตถการเสริม addon แพ็กเกจรายเดือน',
     answer:'เคสแพ็กเกจรายเดือนสามารถเพิ่มบริการหัตถการเสริมแยกเรียกเก็บได้ ในส่วน "บริการหัตถการเสริม (ไม่บังคับ)" ของฟอร์ม' },
+  { keywords:'vip room care ห้องพิเศษ โรงพยาบาล rn pn na cg พยาบาล',
+    answer:'VIP Room Care คือบริการดูแลผู้ป่วยห้องพิเศษที่โรงพยาบาลแบบ 1:1 คิดราคาเป็นอัตรา/วัน แยกตามตำแหน่งเจ้าหน้าที่ (RN/PN/NA/CG) และแพ็กเกจชั่วโมง (8 หรือ 12 ชม./วัน) คูณด้วยจำนวนวันที่ต้องการ' },
   { keywords:'กันบันทึกซ้ำ ซ้ำ double',
     answer:'ระบบมีการป้องกันบันทึกซ้ำอัตโนมัติ ทั้งฝั่งปุ่ม (ล็อกตัวเองขณะบันทึก) และฝั่ง Google Sheet (จำคำขอเดิมไว้ 5 นาที)' }
 ];
