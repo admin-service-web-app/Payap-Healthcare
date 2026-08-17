@@ -1463,10 +1463,11 @@ const BILLING_ENTITY_CONFIG = {
     signature: ''            // TODO: ข้อความลงชื่อท้ายเอกสาร (ถ้ามี) เช่น 'ลงชื่อ ...................................... (ผู้รับผิดชอบ)'
   },
   other: {
-    name: 'หน่วยงาน 2',      // TODO: ยังไม่ได้รับชื่อหน่วยงานที่ 2 — รอแจ้งชื่อจริง (อาจเป็น Payap Health Care เดียวกัน สำหรับบริการ VIP Room Care)
+    name: 'PAYAP HEALTH CARE PREMIUM',      // ยืนยันแล้ว — หน่วยงานที่ 2 (ออกเอกสารสำหรับบริการหัตถการ/คอร์ส/VIP Room Care)
     subtitle: '',            // TODO: ข้อความบรรยายใต้ชื่อ (ถ้ามี)
-    logo: PAYAP_LOGO,        // ใช้โลโก้เดียวกันไปก่อนจนกว่าจะยืนยันหน่วยงานที่ 2
-    signature: ''            // TODO: ข้อความลงชื่อท้ายเอกสาร (ถ้ามี)
+    logo: PAYAP_LOGO,        // ใช้โลโก้เดียวกันไปก่อนจนกว่าจะได้โลโก้เฉพาะของคลินิก
+    signature: '',           // TODO: ข้อความลงชื่อท้ายเอกสาร (ถ้ามี)
+    color: '#B8862E'         // ชื่อหน่วยงานนี้แสดงเป็นตัวหนังสือสีทอง (ตามที่ระบุ)
   }
 };
 /* คืนค่า config ของหน่วยงาน จากชื่อหน่วยงาน (string) ที่เก็บไว้ใน state/payload */
@@ -1777,7 +1778,11 @@ document.querySelectorAll('#serviceTypeRow .radio-chip').forEach(chip=>{
 /* ============ BILLING ENTITY (auto by service type — not admin-selectable) ============ */
 function updateBillingEntity(){
   state.billingEntity = state.serviceType === 'package' ? BILLING_ENTITY_CONFIG.package.name : BILLING_ENTITY_CONFIG.other.name;
-  document.getElementById('billingEntityBadge').textContent = `ออกเอกสารในนาม: ${state.billingEntity}`;
+  const badge = document.getElementById('billingEntityBadge');
+  badge.textContent = `ออกเอกสารในนาม: ${state.billingEntity}`;
+  const color = billingEntityConfig(state.billingEntity).color;
+  badge.style.color = color || '';
+  badge.style.fontWeight = color ? '700' : '';
 }
 
 /* ============ ASSESSMENT FEE CHECKBOX ============ */
@@ -3102,7 +3107,7 @@ function openInvoice(payload, refId){
               <div class="inv-brand">
                 <div class="inv-brand-mark">${invoiceLogoImg(payload)}</div>
                 <div>
-                  <div class="inv-brand-name">${escapeHtml(payload.billingEntity || BILLING_ENTITY_CONFIG.package.name)}</div>
+                  <div class="inv-brand-name" style="${billingEntityConfig(payload.billingEntity).color ? `color:${billingEntityConfig(payload.billingEntity).color};` : ''}">${escapeHtml(payload.billingEntity || BILLING_ENTITY_CONFIG.package.name)}</div>
                   ${clinicFullNameLine(payload)}
                   <div class="inv-brand-sub">ใบสรุปคอร์ส/โปรแกรมบริการ</div>
                 </div>
@@ -3187,7 +3192,7 @@ function openInvoice(payload, refId){
               <div class="inv-brand">
                 <div class="inv-brand-mark">${invoiceLogoImg(payload)}</div>
                 <div>
-                  <div class="inv-brand-name">${escapeHtml(payload.billingEntity || BILLING_ENTITY_CONFIG.package.name)}</div>
+                  <div class="inv-brand-name" style="${billingEntityConfig(payload.billingEntity).color ? `color:${billingEntityConfig(payload.billingEntity).color};` : ''}">${escapeHtml(payload.billingEntity || BILLING_ENTITY_CONFIG.package.name)}</div>
                   ${clinicFullNameLine(payload)}
                   <div class="inv-brand-sub">ใบสรุป VIP Room Care</div>
                 </div>
@@ -3293,7 +3298,7 @@ function openInvoice(payload, refId){
             <div class="inv-brand">
               <div class="inv-brand-mark">${invoiceLogoImg(payload)}</div>
               <div>
-                <div class="inv-brand-name">${escapeHtml(payload.billingEntity || BILLING_ENTITY_CONFIG.package.name)}</div>
+                <div class="inv-brand-name" style="${billingEntityConfig(payload.billingEntity).color ? `color:${billingEntityConfig(payload.billingEntity).color};` : ''}">${escapeHtml(payload.billingEntity || BILLING_ENTITY_CONFIG.package.name)}</div>
                 ${clinicFullNameLine(payload)}
                 <div class="inv-brand-sub">ใบสรุปแผนการดูแลและค่าบริการ</div>
               </div>
